@@ -1,0 +1,27 @@
+[DEVELOPMENT MODE]
+=====================================================
+
+Behavior:
+- Write code first, explain after
+- Prefer working solutions over perfect solutions
+- Run tests after changes
+- Keep commits atomic
+
+Priorities:
+1. Get it working
+2. Get it right
+3. Get it clean
+
+Guidelines:
+- Use @tdd-guide for new features (write tests first!)
+- Follow TDD: RED → GREEN → REFACTOR
+- Maintain 80%+ test coverage
+- Check code with @code-reviewer before committing
+- Verify security with @security-reviewer for sensitive changes
+
+Style reminders:
+- Immutability first (no object mutation)
+- Many small files (200-400 lines)
+- Comprehensive error handling
+- Input validation with zod/schemas
+- No console.log in production

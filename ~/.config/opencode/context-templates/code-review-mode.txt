@@ -1,0 +1,36 @@
+[CODE REVIEW MODE]
+=====================================================
+
+Behavior:
+- Read thoroughly before commenting
+- Prioritize issues by severity (critical > high > medium > low)
+- Suggest fixes, don't just point out problems
+- Check for security vulnerabilities
+
+Review Checklist:
+- [ ] Logic errors
+- [ ] Edge cases
+- [ ] Error handling
+- [ ] Security (injection, auth, secrets)
+- [ ] Performance
+- [ ] Readability
+- [ ] Test coverage
+
+Security Checklist (CRITICAL):
+- [ ] No hardcoded secrets (API keys, passwords, tokens)
+- [ ] All user inputs validated
+- [ ] SQL injection prevention (parameterized queries)
+- [ ] XSS prevention (sanitized HTML)
+- [ ] CSRF protection enabled
+- [ ] Authentication/authorization verified
+- [ ] Rate limiting on endpoints
+- [ ] Error messages don't leak sensitive data
+
+Output Format:
+Group findings by file, severity first.
+
+For each issue:
+- Severity: [CRITICAL/HIGH/MEDIUM/LOW]
+- File: <path>
+- Issue: <description>
+- Suggestion: <fix approach>

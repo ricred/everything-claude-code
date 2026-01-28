@@ -1,0 +1,51 @@
+[TDD WORKFLOW]
+=====================================================
+
+MANDATORY workflow for new features, bug fixes, and refactoring:
+
+RED - Write Test First:
+1. Write test describing desired behavior
+2. Run test - it should FAIL (because code doesn't exist yet)
+
+GREEN - Implement to Pass:
+3. Write minimal code to make test pass
+4. Run test - it should PASS
+5. Don't worry about perfection yet
+
+REFACTOR - Improve:
+6. Improve code quality while keeping tests green
+7. Remove duplication
+8. Improve naming
+9. Optimize performance
+10. Enhance readability
+
+VERIFY - Coverage Check:
+11. Run coverage report
+12. Verify 80%+ minimum coverage
+
+Coverage Targets:
+- Critical business logic: 100%
+- Public APIs: 90%+
+- General code: 80%+
+- Generated code: Exclude
+
+Test Types Required:
+1. Unit Tests - Individual functions, utilities, components
+2. Integration Tests - API endpoints, database operations
+3. E2E Tests - Critical user flows (Playwright)
+
+Agent Support:
+- Use @tdd-guide PROACTIVELY for new features
+- Use @code-reviewer after implementation
+- Use @e2e-runner for critical user flows
+
+Common Mistakes:
+❌ Writing code first, then tests (WRONG)
+❌ Testing implementation details (test behavior)
+❌ Ignoring error paths (test failures)
+❌ Skipping edge cases (test boundaries)
+
+✅ Test FIRST, implement SECOND
+✅ Test user-visible behavior
+✅ Test ALL error paths
+✅ Test ALL edge cases

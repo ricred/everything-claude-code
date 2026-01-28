@@ -1,0 +1,630 @@
+# OpenCode Migration PRD for everything-claude-code
+
+## Context
+The everything-claude-code repository is a battle-tested collection of Claude Code configurations developed over 10+ months of intensive daily use. This PRD defines a migration plan to adapt the repository for compatibility with OpenCode.ai (anomalyco/opencode), an open-source AI coding agent with 90K GitHub stars and sophisticated agent architecture.
+
+The primary challenge is that OpenCode has a fundamentally different agent architecture than Claude Code. While both support multi-agent workflows, OpenCode's system is more limited in orchestration capabilities but offers advantages like multi-model support, privacy-first design, and cross-platform compatibility.
+
+## Core Features
+
+### 1. Research and Analysis Phase
+
+**What it does:**
+- Deep analysis of OpenCode's agent system, configuration patterns, and capabilities
+- Comparison mapping between Claude Code and OpenCode architectures
+- Identification of feature gaps and compatibility issues
+
+**Why it's important:**
+- Foundation for all subsequent conversion work
+- Prevents wasted effort on incompatible features
+- Enables informed decision-making about feature prioritization
+
+**How it works at high level:**
+- Document OpenCode's agent types (primary agents vs subagents)
+- Map Claude Code's 12 specialized agents to OpenCode equivalents
+- Create compatibility matrix showing what works, what needs adaptation, what's impossible
+
+### 2. Agent System Migration
+
+**What it does:**
+- Convert Claude Code agent definitions to OpenCode agent/skill formats
+- Create agent configurations for OpenCode's JSON and markdown systems
+- Implement OpenCode's two built-in agent types (Build, Plan, General, Explore)
+
+**Why it's important:**
+- Agents are the core value proposition of this repository
+- OpenCode's agent system is different (no orchestration, limited delegation)
+- Proper conversion determines repository's usefulness for OpenCode users
+
+**How it works at high level:**
+- Convert each of 12 agents (planner, architect, tdd-guide, etc.) to OpenCode format
+- Map agent-specific tool permissions to OpenCode's permission system
+- Create configuration files in `~/.config/opencode/agents/` and `.opencode/agents/`
+- Document usage patterns and invocation methods (@mentioning vs primary agent switching)
+
+### 3. Skills System Conversion
+
+**What it does:**
+- Convert Claude Code skills to OpenCode's Agent Skills format (SKILL.md)
+- Adapt skill discovery and activation patterns for OpenCode
+- Create skill organization structure compatible with OpenCode's paths
+
+**Why it's important:**
+- 14+ skills contain valuable domain knowledge
+- OpenCode's Agent Skills are compatible with SKILL.md format
+- Skills are more portable than Claude Code's full agent system
+
+**How it works at high level:**
+- Extract skill content from existing `skills/*/SKILL.md` files
+- Adapt to OpenCode's Agent Skills specifications
+- Organize in `~/.config/opencode/skills/` (global) and `.opencode/skills/` (project)
+- Update skill metadata to match OpenCode's discovery system
+
+### 4. Commands Adaptation
+
+**What it does:**
+- Adapt 20+ slash commands to OpenCode's workflow
+- Create custom commands in OpenCode's configuration system
+- Map command invocation patterns to OpenCode's TUI/CLI interface
+
+**Why it's important:**
+- Commands provide quick access to common workflows
+- OpenCode doesn't have slash commands in same way as Claude Code
+- Custom commands can be implemented via OpenCode's command system or prompts
+
+**How it works at high level:**
+- Analyze each command's purpose and input parameters
+- Convert to OpenCode-compatible prompts or command configurations
+- Document manual invocation methods (since OpenCode lacks native slash commands)
+- Create command reference documentation for OpenCode users
+
+### 5. Rules and Contexts Adaptation
+
+**What it does:**
+- Convert always-follow rules to OpenCode's configuration
+- Adapt context injection system to OpenCode's initialization
+- Create guidelines for OpenCode's permission-based approach
+
+**Why it's important:**
+- Rules (6 files) define behavioral constraints
+- Contexts (10+ files) provide dynamic system prompts
+- OpenCode lacks equivalent to Claude Code's rules/contexts system
+
+**How it works at high level:**
+- Extract rule patterns and convert to OpenCode's agent prompt modifications
+- Map context files to OpenCode's initialization file (AGENTS.md)
+- Create documentation for rule enforcement via agent prompts
+- Implement workarounds for missing features
+
+### 6. Hooks System Replacement
+
+**What it does:**
+- Create alternative mechanisms for Claude Code's event-driven hook system
+- Implement session management for memory persistence
+- Provide compaction suggestions equivalent
+
+**Why it's important:**
+- Hooks automate memory persistence and session management
+- OpenCode doesn't have built-in hook system
+- Core functionality (memory, compaction) needs alternative implementation
+
+**How it works at high level:**
+- Document OpenCode's session management features
+- Create manual workflows for memory save/load
+- Implement user-initiated compaction patterns
+- Create guide for session-based context preservation
+
+### 7. Advanced Patterns Migration
+
+**What it does:**
+- Adapt Iterative Retrieval pattern to OpenCode's limitations
+- Convert Continuous Learning system to manual workflows
+- Implement parallel workflow patterns using OpenCode's multi-session support
+
+**Why it's important:**
+- These patterns differentiate this repository from basic configurations
+- OpenCode cannot natively support these sophisticated patterns
+- Need creative workarounds to preserve value
+
+**How it works at high level:**
+- **Iterative Retrieval:** Create manual 4-phase retrieval guides
+- **Continuous Learning:** Document manual observation and pattern extraction process
+- **Parallel Workflows:** Use OpenCode's multi-session capability with coordination documentation
+- Create pattern libraries for users to implement manually
+
+### 8. Scripts and Utilities Migration
+
+**What it does:**
+- Convert Node.js cross-platform scripts to equivalent functionality
+- Ensure OpenCode compatibility for all utility functions
+- Create OpenCode-specific scripts where needed
+
+**Why it's important:**
+- Scripts support cross-platform functionality
+- Some scripts may be Claude Code-specific and need replacement
+- Ensures repository works across different environments
+
+**How it works at high level:**
+- Audit all scripts in `/scripts/` directory
+- Identify dependencies on Claude Code APIs
+- Create OpenCode-compatible alternatives
+- Document script usage for OpenCode workflows
+
+### 9. Documentation and Guides
+
+**What it does:**
+- Create comprehensive migration guide for users
+- Document compatibility matrix (what works, what doesn't, what needs adaptation)
+- Create OpenCode-specific usage examples
+
+**Why it's important:**
+- Users need clear guidance on what to expect
+- Helps users understand trade-offs and limitations
+- Enables informed decisions about using migrated version
+
+**How it works at high level:**
+- Write detailed README with migration instructions
+- Create compatibility matrix as table or checklist
+- Provide before/after examples for workflows
+- Document known limitations and workarounds
+
+### 10. Testing and Validation
+
+**What it does:**
+- Validate all converted agents work in OpenCode
+- Test skills discovery and activation
+- Verify commands and workflows function correctly
+- Document issues and edge cases
+
+**Why it's important:**
+- Ensures migration quality and usability
+- Catches compatibility issues before release
+- Provides confidence to users adopting migrated version
+
+**How it works at high level:**
+- Create test scenarios for each agent/skill
+- Verify OpenCode configuration loading
+- Test tool permissions and restrictions
+- Document test results and known issues
+
+## User Experience
+
+### User Personas
+
+1. **Claude Code Power User:** Existing users of everything-claude-code who want to switch to OpenCode
+   - Experienced with agent orchestration workflows
+   - Relies on sequential/parallel agent chains
+   - Values automation and sophisticated patterns
+
+2. **New OpenCode User:** Developers adopting OpenCode who want access to this repository's expertise
+   - Unfamiliar with Claude Code's ecosystem
+   - Values simplicity and privacy-first design
+   - May need guidance on agent workflows
+
+3. **Hybrid User:** Developer using both Claude Code and OpenCode
+   - Uses Claude Code for complex orchestration
+   - Uses OpenCode for daily development tasks
+   - Needs compatibility across both platforms
+
+### Key User Flows
+
+**Migration Flow:**
+1. User installs OpenCode and configures model providers
+2. User clones migrated repository to `~/.config/opencode/`
+3. OpenCode automatically discovers agents and skills from configured paths
+4. User starts OpenCode and can access all converted agents/skills
+5. User invokes agents via @mentioning or primary agent switching
+
+**Daily Usage Flow (OpenCode-native):**
+1. User starts OpenCode TUI or desktop app
+2. User selects Build or Plan primary agent
+3. User invokes subagent via @mention (e.g., @general)
+4. Agent completes task with appropriate tool permissions
+5. User can switch between parent/child sessions
+
+**Workaround Flow (for Claude Code patterns):**
+1. User manually starts multiple OpenCode sessions
+2. User coordinates parallel work across sessions
+3. User manually passes context between sessions
+4. User aggregates results from multiple sessions
+
+### UI/UX Considerations
+
+- **Agent Discovery:** OpenCode should auto-discover agents/skills from standard paths
+- **Permission Clarity:** Users need clear understanding of which agent can do what
+- **Multi-session Navigation:** OpenCode's session navigation should be intuitive for parallel workflows
+- **Error Messages:** Clear guidance when features are incompatible or require workarounds
+- **Documentation:** In-app help for discovering available agents and skills
+
+## Technical Architecture
+
+### System Components
+
+1. **OpenCode Agent System**
+   - Primary agents: Build (full access), Plan (restricted)
+   - Subagents: General (multi-step tasks), Explore (read-only codebase exploration)
+   - Configuration via JSON (`opencode.json`) and Markdown (`~/.config/opencode/agents/*.md`)
+
+2. **Agent Skills System**
+   - SKILL.md format for skill definitions
+   - Discovery paths: global (`~/.config/opencode/skills/`) and project (`.opencode/skills/`)
+   - Activated via agent context or user requests
+
+3. **Permission System**
+   - Per-agent tool permissions (write, edit, bash, etc.)
+   - Permission levels: allow, ask, deny
+   - Glob patterns for fine-grained bash command control
+   - Task permissions for controlling which subagents an agent can invoke
+
+4. **Multi-Session Architecture**
+   - Parent sessions with child sessions created by subagents
+   - Session cycling via keybinds (<Leader>+Right, <Leader>+Left)
+   - Independent session contexts while maintaining relationship
+
+5. **Configuration Layers**
+   - Global config: `~/.config/opencode/opencode.json`
+   - Project config: `.opencode/opencode.json`
+   - Environment variable overrides
+   - Priority: project > global > defaults
+
+### Data Models
+
+1. **Agent Configuration Model**
+   - Mode: primary, subagent, or all
+   - Tools: object with boolean flags for each tool
+   - Permissions: object mapping tools to allow/ask/deny
+   - Model: provider/model-id string
+   - Temperature, maxSteps, hidden, taskPermission settings
+
+2. **Skill Definition Model**
+   - Frontmatter with metadata (description, mode, tools, model, temperature)
+   - Markdown content for skill instructions
+   - Compatibility with Agent Skills open standard
+
+3. **Permission Model**
+   - Hierarchical: global > agent-specific
+   - Glob pattern matching for flexible rules
+   - Last matching rule wins principle
+
+### APIs and Integrations
+
+1. **OpenCode Internal APIs**
+   - Agent invocation via Task tool
+   - Session management APIs
+   - Configuration loading and validation
+   - Permission checking and enforcement
+
+2. **Model Provider Integration**
+   - 75+ providers (Anthropic, OpenAI, Google, local models, etc.)
+   - Provider-specific parameters (reasoningEffort, textVerbosity)
+   - OpenCode Zen for optimized models
+
+3. **External Tool Integration**
+   - MCP (Model Context Protocol) servers
+   - LSP (Language Server Protocol) integration
+   - Custom tools via OpenCode's plugin system
+
+### Infrastructure Requirements
+
+1. **File System**
+   - `~/.config/opencode/` - Global agents, skills, config
+   - `.opencode/` - Project-specific agents, skills, config
+   - `.opencode/logs/` - Session logs
+   - Standard XDG directory support
+
+2. **Cross-Platform Support**
+   - macOS, Linux, Windows (PowerShell and WSL)
+   - Desktop apps (beta)
+   - Terminals (TUI)
+
+3. **Version Control**
+   - Git integration for attribution
+   - Session sharing via links
+   - AGENTS.md initialization for project context
+
+## Development Roadmap
+
+### MVP Requirements
+
+**Phase 1: Research and Analysis (Foundation)**
+- Complete deep analysis of OpenCode documentation
+- Create Claude Code vs OpenCode compatibility matrix
+- Document agent, skill, command mapping
+- Identify feature gaps and limitations
+
+**Phase 2: Agent System Conversion (Core Value)**
+- Convert all 12 specialized agents to OpenCode format
+- Create JSON configurations for Build/Plan agent types
+- Create markdown agent files for custom subagents
+- Map tool permissions to OpenCode's permission system
+- Test agent discovery and invocation
+
+**Phase 3: Skills System Migration (Knowledge Base)**
+- Convert all 14+ skills to SKILL.md format
+- Organize skills in global and project paths
+- Verify skill discovery works in OpenCode
+- Document skill usage patterns
+
+**Phase 4: Commands Adaptation (Workflow Automation)**
+- Adapt 20+ commands to OpenCode-compatible workflows
+- Create custom command prompts
+- Document manual invocation methods
+- Test command functionality
+
+**Phase 5: Documentation Creation (User Enablement)**
+- Write comprehensive migration guide
+- Create compatibility matrix documentation
+- Provide before/after examples for key workflows
+- Document limitations and workarounds
+
+**Phase 6: Testing and Validation (Quality Assurance)**
+- Test all agents in real OpenCode sessions
+- Validate skill discovery and activation
+- Verify command workflows
+- Document known issues and edge cases
+
+### Future Enhancements
+
+**Enhancement 1: Advanced Pattern Workarounds**
+- Create guides for manual parallel workflows
+- Document session coordination patterns
+- Implement pattern libraries for users
+
+**Enhancement 2: Continuous Learning Adaptation**
+- Create manual observation and pattern extraction workflows
+- Build tooling to automate pattern evolution
+- Document instinct-based learning process
+
+**Enhancement 3: Hooks Equivalent System**
+- Explore OpenCode's extensibility for hook-like functionality
+- Create alternative automation systems
+- Investigate plugin development possibilities
+
+**Enhancement 4: Integration Testing**
+- Automated testing of migrated configuration
+- CI/CD integration for validation
+- Regression testing across OpenCode versions
+
+## Logical Dependency Chain
+
+### Foundation Layer (Phase 1-2)
+1. **Research and Analysis** - Must understand OpenCode before any conversion
+2. **Compatibility Matrix Creation** - Mapping informs all subsequent conversion work
+3. **Agent System Understanding** - Required before converting any agents
+
+### Core Conversion Layer (Phase 2-4)
+4. **Agent Conversion** - Core value, depends on research
+5. **Skills Conversion** - Independent but can reference agents
+6. **Commands Adaptation** - May invoke converted agents
+
+### User Enablement Layer (Phase 5-6)
+7. **Documentation Creation** - Depends on all conversions being complete
+8. **Testing and Validation** - Final validation of entire system
+
+### Enhancement Layer (Future)
+9. **Advanced Pattern Workarounds** - Depends on core layer being usable
+10. **Continuous Learning Adaptation** - Builds on documentation
+11. **Hooks Equivalent System** - Requires understanding OpenCode internals
+
+## Risks and Mitigations
+
+### Technical Challenges
+
+**Risk 1: OpenCode's Limited Orchestration**
+- **Issue:** No native support for sequential/parallel agent chains
+- **Impact:** Core value proposition (orchestrated workflows) lost
+- **Mitigation:** Document manual multi-session coordination patterns
+- **Mitigation:** Create guide for parallel session management
+- **Mitigation:** Prioritize single-agent workflows where possible
+
+**Risk 2: Agent Permission Differences**
+- **Issue:** OpenCode's permission system is different from Claude Code
+- **Impact:** Some agent capabilities cannot be exactly replicated
+- **Mitigation:** Map Claude Code's scoped tools to nearest OpenCode equivalent
+- **Mitigation:** Document permission trade-offs clearly
+
+**Risk 3: Missing Hook System**
+- **Issue:** No event-driven automation for memory/compaction
+- **Impact:** Loss of automated workflows
+- **Mitigation:** Create manual workflows for critical tasks
+- **Mitigation:** Document OpenCode's native session management features
+
+**Risk 4: Skills Format Differences**
+- **Issue:** Subtle differences between Claude Code and OpenCode formats
+- **Impact:** Some skills may not work identically
+- **Mitigation:** Test each skill thoroughly
+- **Mitigation:** Document format variations and workarounds
+
+**Risk 5: Command System Differences**
+- **Issue:** OpenCode lacks native slash command system
+- **Impact:** Commands become prompts rather than quick invocations
+- **Mitigation:** Create custom commands via OpenCode's configuration
+- **Mitigation:** Document prompt patterns for command-like workflows
+
+### Figuring Out MVP that We Can Build Upon
+
+**MVP Scope:**
+- Core agents converted and working (at minimum: planner, code-reviewer, tdd-guide)
+- Core skills converted and discoverable (coding-standards, backend-patterns)
+- Basic documentation explaining compatibility and trade-offs
+- Testing validation of critical workflows
+
+**What MVP Enables:**
+- Users can install and use migrated repository with OpenCode
+- Access to primary value (agents and skills) without full Claude Code
+- Clear understanding of what's supported vs. what requires adaptation
+- Foundation for incremental enhancement
+
+### Resource Constraints
+
+**Constraint 1: Limited OpenCode Orchestration**
+- Cannot rely on automated agent chains
+- Must document manual coordination patterns
+- User education required for complex workflows
+
+**Constraint 2: Knowledge Gaps**
+- Deep OpenCode internals may not be fully documented
+- Some behaviors require experimentation
+- May need to iterate on approaches
+
+**Constraint 3: Testing Environment**
+- Need access to OpenCode for testing
+- May require OpenCode version management
+- Cross-platform validation needed
+
+**Constraint 4: Documentation Maintenance**
+- Migration guide needs updates as OpenCode evolves
+- Compatibility matrix requires ongoing maintenance
+- User feedback loop needed for improvements
+
+## Appendix
+
+### Research Findings
+
+**OpenCode Agent System Capabilities:**
+- Supports two agent types: primary agents and subagents
+- Two built-in primary agents: Build (full access), Plan (restricted)
+- Two built-in subagents: General (multi-step), Explore (read-only)
+- Agent configuration via JSON or Markdown files
+- Tool permission system with allow/ask/deny levels
+- Task permissions for subagent invocation control
+- Multi-session support with parent/child relationships
+- Session cycling via keybinds for navigation
+
+**Claude Code vs OpenCode Comparison:**
+- Claude Code: Native orchestration, 12+ custom agents, hooks system, rules system
+- OpenCode: Limited orchestration, 2+ built-in subagents, multi-session support
+- Claude Code: Agent-specific tools, slash commands, contexts system
+- OpenCode: Permission-based tools, @mentioning, session management
+
+**Feature Compatibility Matrix:**
+| Feature | Claude Code | OpenCode | Migration Notes |
+|----------|-------------|----------|----------------|
+| Agent Definition | .md files | .md and JSON | Compatible format |
+| Agent Orchestration | Native | Limited | Manual workaround needed |
+| Parallel Agents | Built-in | Multi-session | Sessions need coordination |
+| Tool Permissions | Per-agent | Permission system | Mapping required |
+| Subagent Invocation | Task tool | @mentioning | Different mechanism |
+| Skills | Custom format | Agent Skills | SKILL.md compatible |
+| Slash Commands | Native | Not native | Custom commands or prompts |
+| Hooks | Event-driven | Not available | Manual workflows |
+| Rules | Always-follow | Agent prompts | Different mechanism |
+| Contexts | Dynamic injection | AGENTS.md | Adaptation needed |
+| Memory | Hooks/session | Multi-session | Different persistence |
+| Compaction | Automatic | Manual | User-initiated |
+
+### Technical Specifications
+
+**Agent Configuration JSON Schema:**
+```json
+{
+  "agent": {
+    "<agent-name>": {
+      "description": "string (required)",
+      "mode": "primary|subagent|all",
+      "model": "provider/model-id",
+      "prompt": "{file:./prompts/agent.txt} or direct string",
+      "tools": {
+        "write": boolean,
+        "edit": boolean,
+        "bash": boolean,
+        "grep": boolean,
+        "ls": boolean,
+        "view": boolean,
+        "webfetch": boolean
+      },
+      "permission": {
+        "edit": "allow|ask|deny",
+        "bash": {
+          "glob-pattern": "allow|ask|deny"
+        }
+      },
+      "maxSteps": number,
+      "temperature": number,
+      "hidden": boolean,
+      "taskPermission": {
+        "glob-pattern": "allow|ask|deny"
+      }
+    }
+  }
+}
+```
+
+**Agent Configuration Markdown Schema:**
+```markdown
+---
+description: Brief description
+mode: primary|subagent|all
+model: provider/model-id
+prompt: Direct instructions or {file:./prompts/agent.txt}
+temperature: number
+maxSteps: number
+tools:
+  write: boolean
+  edit: boolean
+  bash: boolean
+permission:
+  edit: allow|ask|deny
+  bash: allow|ask|deny
+hidden: boolean
+---
+Agent instructions here...
+```
+
+**Skill Definition Schema (SKILL.md):**
+```markdown
+---
+description: Skill description
+mode: subagent
+model: provider/model-id
+temperature: number
+tools:
+  write: boolean
+  edit: boolean
+  bash: boolean
+---
+
+Skill instructions here...
+```
+
+**OpenCode Configuration Schema:**
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "<agent-name>": { /* agent config */ }
+  },
+  "options": {
+    "skills_paths": ["~/.config/opencode/skills", ".opencode/skills"],
+    "initialize_as": "AGENTS.md"
+  },
+  "permission": {
+    "edit": "allow|ask|deny",
+    "bash": "allow|ask|deny"
+  }
+}
+```
+
+**Directory Structure for Migration:**
+```
+~/.config/opencode/
+├── agents/              # Converted agents (markdown format)
+├── skills/              # Converted skills (SKILL.md format)
+├── opencode.json        # Main configuration
+└── AGENTS.md           # Optional: project context (equivalent to CLAUDE.md)
+
+.opencode/              # Project-specific (overrides global)
+├── agents/              # Project agents
+├── skills/              # Project skills
+└── opencode.json        # Project configuration
+
+project/
+├── agents/              # Original Claude Code agents (keep for reference)
+├── skills/              # Original Claude Code skills (keep for reference)
+├── commands/            # Original commands (adapt to prompts)
+├── rules/               # Original rules (adapt to agent prompts)
+├── contexts/            # Original contexts (adapt to AGENTS.md)
+├── hooks/               # Original hooks (document workarounds)
+├── scripts/             # Scripts (adapt or replace)
+└── MIGRATION_GUIDE.md # New: OpenCode migration guide
+```

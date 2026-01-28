@@ -1,0 +1,120 @@
+{
+  "$schema": "https://opencode.ai/schemas/opencode-v2.json",
+  "version": "2.0.0",
+  "project_name": "everything-claude-code",
+  "description": "Battle-tested Claude Code configurations migrated to OpenCode.ai compatibility",
+
+  "agents_path": [
+    "~/.config/opencode/agents"
+  ],
+
+  "skills_paths": [
+    "~/.config/opencode/skills",
+    ".opencode/skills"
+  ],
+
+  "commands_path": [
+    "~/.config/opencode/commands"
+  ],
+
+  "context_templates_path": "~/.config/opencode/context-templates",
+
+  "default_agent": {
+    "model": "anthropic/claude-sonnet-4-20250514",
+    "temperature": 0.2
+  },
+
+  "permissions": {
+    "default": "ask",
+    "agent_overrides": {
+      "planner": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "view": "allow",
+        "write": "deny",
+        "edit": "deny",
+        "bash": "deny"
+      },
+      "architect": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "view": "allow",
+        "write": "deny",
+        "edit": "deny",
+        "bash": "deny"
+      },
+      "tdd-guide": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "view": "allow",
+        "write": "allow",
+        "edit": "allow",
+        "bash": "allow"
+      },
+      "code-reviewer": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "view": "allow",
+        "write": "deny",
+        "edit": "deny",
+        "bash": "deny"
+      },
+      "security-reviewer": {
+        "read": "allow",
+        "grep": "allow",
+        "glob": "allow",
+        "view": "allow",
+        "write": "deny",
+        "edit": "deny",
+        "bash": "deny"
+      }
+    }
+  },
+
+  "model_selection": {
+    "default": "anthropic/claude-sonnet-4-20250514",
+
+    "haiku_use_cases": [
+      "Lightweight agents with frequent invocation",
+      "Pair programming and code generation",
+      "Worker agents in multi-agent systems"
+    ],
+
+    "sonnet_use_cases": [
+      "Main development work",
+      "Orchestrating multi-agent workflows",
+      "Complex coding tasks"
+    ],
+
+    "opus_use_cases": [
+      "Complex architectural decisions",
+      "Maximum reasoning requirements",
+      "Research and analysis tasks"
+    ]
+  },
+
+  "context_management": {
+    "auto_compaction": false,
+    "compact_threshold": 50,
+    "context_window_strategy": "manual"
+  },
+
+  "continuous_learning": {
+    "enabled": true,
+    "mode": "manual",
+    "reflection_schedule": "daily",
+    "learned_skills_path": "~/.config/opencode/skills/learned"
+  },
+
+  "workflow": {
+    "tdd_required": true,
+    "test_coverage_target": 0.8,
+    "code_style": "immutable-first",
+    "commit_format": "conventional",
+    "git_workflow": "feature-branch"
+  }
+}

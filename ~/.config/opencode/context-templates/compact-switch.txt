@@ -1,0 +1,46 @@
+[COMPACT: SWITCHING CONTEXTS]
+=====================================================
+
+Switching from [PREVIOUS TASK] to [NEW TASK].
+
+KEEP:
+- High-level project overview
+- Critical architectural patterns
+- Global project settings
+- Active branches/PRs
+- Project standards and conventions
+- Key technical decisions affecting entire project
+- Configuration/environment setup
+
+DISCARD:
+- Previous task details
+- Temporary files from previous task
+- Task-specific debugging info
+- Unused imports/variables from previous task
+- Specific implementation details of previous task
+- Previous task's context/expertise
+- Comments/questions resolved in previous task
+
+NEW CONTEXT LOADING:
+Now focusing on: [NEW TASK]
+
+Relevant skills:
+- [ ] Skill 1 to use
+- [ ] Skill 2 to use
+- [ ] Skill 3 to use
+
+Relevant agents:
+- [ ] @agent1 for this task
+- [ ] @agent2 for this task
+
+Context to load:
+- [ ] Related memory files (if any)
+- [ ] Previous work on this area (if any)
+- [ ] Project guidelines (if applicable)
+
+WORKFLOW:
+1. Load relevant context/memory
+2. Use appropriate context template
+3. Apply relevant skills/agents
+4. Execute task
+5. Document progress

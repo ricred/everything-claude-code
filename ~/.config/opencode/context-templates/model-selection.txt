@@ -1,0 +1,42 @@
+[MODEL SELECTION GUIDELINES]
+=====================================================
+
+Use Haiku 4.5 for:
+- Lightweight agents with frequent invocation
+- Pair programming and code generation
+- Worker agents in multi-agent systems
+- Simple utility functions
+
+Use Sonnet 4.5 for:
+- Main development work
+- Orchestrating multi-agent workflows
+- Complex coding tasks
+- API implementation
+- Component development
+
+Use Opus 4.5 for:
+- Complex architectural decisions
+- Maximum reasoning requirements
+- Research and analysis tasks
+- System design
+- Bug investigation
+
+Context Window Management:
+------------------------------------------------
+
+Avoid last 20% of context window for:
+- Large-scale refactoring
+- Feature implementation spanning multiple files
+- Debugging complex interactions
+
+Lower context sensitivity for:
+- Single-file edits
+- Independent utility creation
+- Documentation updates
+- Simple bug fixes
+
+Performance Tips:
+- Use Haiku for quick iterations and drafts
+- Switch to Sonnet for final implementation
+- Use Opus for complex refactoring or architecture
+- Parallel agents for independent tasks

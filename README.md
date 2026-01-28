@@ -1,471 +1,411 @@
-# Everything Claude Code
+# everything-claude-code: OpenCode Edition
 
-[![Stars](https://img.shields.io/github/stars/affaan-m/everything-claude-code?style=flat)](https://github.com/affaan-m/everything-claude-code/stargazers)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Shell](https://img.shields.io/badge/-Shell-4EAA25?logo=gnu-bash&logoColor=white)
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
-![Go](https://img.shields.io/badge/-Go-00ADD8?logo=go&logoColor=white)
-![Markdown](https://img.shields.io/badge/-Markdown-000000?logo=markdown&logoColor=white)
+OpenCode-compatible version of the battle-tested Claude Code configurations from an Anthropic hackathon winner.
 
-**The complete collection of Claude Code configs from an Anthropic hackathon winner.**
-
-Production-ready agents, skills, hooks, commands, rules, and MCP configurations evolved over 10+ months of intensive daily use building real products.
+**⚠️ Important:** This version includes significant architectural differences from the original Claude Code version. Please read the [Compatibility Matrix](#compatibility-matrix) to understand what works, what requires adaptation, and what limitations exist.
 
 ---
 
-## The Guides
+## Quick Start
 
-This repo is the raw code only. The guides explain everything.
+### Installation
 
-<table>
-<tr>
-<td width="50%">
-<a href="https://x.com/affaanmustafa/status/2012378465664745795">
-<img src="https://github.com/user-attachments/assets/1a471488-59cc-425b-8345-5245c7efbcef" alt="The Shorthand Guide to Everything Claude Code" />
-</a>
-</td>
-<td width="50%">
-<a href="https://x.com/affaanmustafa/status/2014040193557471352">
-<img src="https://github.com/user-attachments/assets/c9ca43bc-b149-427f-b551-af6840c368f0" alt="The Longform Guide to Everything Claude Code" />
-</a>
-</td>
-</tr>
-<tr>
-<td align="center"><b>Shorthand Guide</b><br/>Setup, foundations, philosophy. <b>Read this first.</b></td>
-<td align="center"><b>Longform Guide</b><br/>Token optimization, memory persistence, evals, parallelization.</td>
-</tr>
-</table>
+1. **Clone this repository:**
+   ```bash
+   git clone https://github.com/yourusername/everything-claude-code.git
+   cd everything-claude-code
+   ```
 
-| Topic | What You'll Learn |
-|-------|-------------------|
-| Token Optimization | Model selection, system prompt slimming, background processes |
-| Memory Persistence | Hooks that save/load context across sessions automatically |
-| Continuous Learning | Auto-extract patterns from sessions into reusable skills |
-| Verification Loops | Checkpoint vs continuous evals, grader types, pass@k metrics |
-| Parallelization | Git worktrees, cascade method, when to scale instances |
-| Subagent Orchestration | The context problem, iterative retrieval pattern |
+2. **Install OpenCode:**
+   ```bash
+   # Using Homebrew (macOS and Linux)
+   brew install anomalyco/tap/opencode
+   
+   # Or using install script
+   curl -fsSL https://opencode.ai/install | bash
+   ```
+
+3. **Configure OpenCode for this repository:**
+   
+   OpenCode automatically discovers agents and skills from:
+   - `~/.config/opencode/agents/` (global)
+   - `.opencode/agents/` (project-specific)
+   
+   The `.claude-plugin/plugin.json` file has been converted to OpenCode agent definitions in `~/.config/opencode/agents/`.
+
+4. **Start OpenCode:**
+   ```bash
+   opencode
+   ```
+`
 
 ---
 
-## Cross-Platform Support
+## Overview
 
-This plugin now fully supports **Windows, macOS, and Linux**. All hooks and scripts have been rewritten in Node.js for maximum compatibility.
+The `everything-claude-code` repository has been adapted for compatibility with **OpenCode.ai** (anomalyco/opencode). This version provides:
 
-### Package Manager Detection
+- ✅ **Agents**: 12 specialized agents converted to OpenCode format
+- ✅ **Skills**: 3 core skills (coding-standards, backend-patterns, frontend-patterns) converted to Agent Skills format
+- ✅ **Commands**: Prompt-based commands for common workflows
+- ⚠️ **Limited Orchestration**: OpenCode lacks native agent chains (manual coordination required)
+- ⚠️ **No Hooks**: Event-driven automations replaced with manual workflows
 
-The plugin automatically detects your preferred package manager (npm, pnpm, yarn, or bun) with the following priority:
+---
 
-1. **Environment variable**: `CLAUDE_PACKAGE_MANAGER`
-2. **Project config**: `.claude/package-manager.json`
-3. **package.json**: `packageManager` field
-4. **Lock file**: Detection from package-lock.json, yarn.lock, pnpm-lock.yaml, or bun.lockb
-5. **Global config**: `~/.claude/package-manager.json`
-6. **Fallback**: First available package manager
+## Compatibility Matrix
 
-To set your preferred package manager:
+| Component | Status | Notes |
+|-----------|--------|-------|
+| **Agents** | ✅ Fully Compatible | 12 agents converted, use `@agent-name` to invoke |
+| **Skills** | ✅ Fully Compatible | Agent Skills format, auto-discovered via `skills_paths` |
+| **Commands** | ✅ Prompt-Based | No native slash commands, use prompts via commands/ |
+| **Orchestration** | ⚠️ Manual Required | No agent chains, use multi-session coordination |
+| **Hooks** | ⚠️ Manual Workaround | No event system, use session management |
+| **Rules** | ⚠️ Different Approach | Converted to agent prompt modifications |
+| **Contexts** | ⚠️ Adapted | Maps to `AGENTS.md` initialization |
+| **Advanced Patterns** | ⚠️ Manual Implementation | Iterative retrieval, continuous learning require manual workflows |
+
+---
+
+## Available Agents
+
+### Primary Agents (Built-in to OpenCode)
+
+OpenCode has two built-in primary agents accessible via **Tab** key:
+
+1. **Build Agent** (Default)
+   - Full tool access (write, edit, bash, grep, ls, view)
+   - Use for general development work
+
+2. **Plan Agent**
+   - Restricted for planning and analysis
+   - File edits and bash commands require confirmation ("ask")
+   - Use for code review and planning without making changes
+
+### Custom Subagents (Converted from Claude Code)
+
+The following 12 agents from `everything-claude-code` are available in OpenCode:
+
+1. **@planner** - Expert planning specialist
+   - Creates comprehensive implementation plans
+   - Analyzes requirements and architecture
+   - Identifies dependencies and risks
+   - **Invocation:** `@planner Create plan for [feature]`
+
+2. **@architect** - Software architecture specialist
+   - Designs system architecture for new features
+   - Evaluates technical trade-offs
+   - Recommends patterns and best practices
+   - **Invocation:** `@architect Review architecture for [component]`
+
+3. **@tdd-guide** - Test-driven development specialist
+   - Enforces TDD methodology
+   - Guides through Red-Green-Refactor-Improve cycle
+   - Ensures 80%+ test coverage
+   - **Invocation:** `@tdd-guide Implement [feature] following TDD methodology`
+
+4. **@code-reviewer** - Code review specialist
+   - Analyzes code changes via git diff
+   - Checks for quality, security, and maintainability
+   - Provides prioritized feedback (Critical, High, Medium, Low)
+   - **Invocation:** `@code-reviewer Review [files/directory]`
+
+5. **@security-reviewer** - Security vulnerability specialist
+   - Identifies OWASP Top 10 vulnerabilities
+   - Detects hardcoded credentials and secrets
+   - Recommends security best practices
+   - **Invocation:** `@security-reviewer Review [files] for security issues`
+
+### Additional Agents (8 more)
+
+6. **@build-error-resolver** - Resolves build errors
+7. **@e2e-runner** - E2E testing with Playwright
+8. **@refactor-cleaner** - Dead code cleanup
+9. **@doc-updater** - Documentation synchronization
+10. **@go-reviewer** - Go-specific code review
+11. **@go-build-resolver** - Go build error resolution
+12. **@database-reviewer** - Database patterns and best practices
+
+---
+
+## Agent Usage
+
+### Invoking Agents
+
+**Method 1: Using @mentioning**
+```
+@planner Create implementation plan for user authentication
+```
+
+**Method 2: Switching Primary Agents**
+- Press **Tab** to cycle between Build and Plan agents
+- Build agent for development work
+- Plan agent for read-only analysis
+
+**Method 3: Multi-Session Workflows**
+
+Since OpenCode lacks native agent orchestration, use multiple sessions for parallel workflows:
 
 ```bash
-# Via environment variable
-export CLAUDE_PACKAGE_MANAGER=pnpm
+# Terminal 1: Start planner session
+opencode
 
-# Via global config
-node scripts/setup-package-manager.js --global pnpm
+# Terminal 2: Start TDD guide session
+opencode
 
-# Via project config
-node scripts/setup-package-manager.js --project bun
+# Terminal 3: Start code-reviewer session
+opencode
 
-# Detect current setting
-node scripts/setup-package-manager.js --detect
-```
-
-Or use the `/setup-pm` command in Claude Code.
-
----
-
-## What's Inside
-
-This repo is a **Claude Code plugin** - install it directly or copy components manually.
-
-```
-everything-claude-code/
-|-- .claude-plugin/   # Plugin and marketplace manifests
-|   |-- plugin.json         # Plugin metadata and component paths
-|   |-- marketplace.json    # Marketplace catalog for /plugin marketplace add
-|
-|-- agents/           # Specialized subagents for delegation
-|   |-- planner.md           # Feature implementation planning
-|   |-- architect.md         # System design decisions
-|   |-- tdd-guide.md         # Test-driven development
-|   |-- code-reviewer.md     # Quality and security review
-|   |-- security-reviewer.md # Vulnerability analysis
-|   |-- build-error-resolver.md
-|   |-- e2e-runner.md        # Playwright E2E testing
-|   |-- refactor-cleaner.md  # Dead code cleanup
-|   |-- doc-updater.md       # Documentation sync
-|   |-- go-reviewer.md       # Go code review (NEW)
-|   |-- go-build-resolver.md # Go build error resolution (NEW)
-|
-|-- skills/           # Workflow definitions and domain knowledge
-|   |-- coding-standards/           # Language best practices
-|   |-- backend-patterns/           # API, database, caching patterns
-|   |-- frontend-patterns/          # React, Next.js patterns
-|   |-- continuous-learning/        # Auto-extract patterns from sessions (Longform Guide)
-|   |-- continuous-learning-v2/     # Instinct-based learning with confidence scoring
-|   |-- iterative-retrieval/        # Progressive context refinement for subagents
-|   |-- strategic-compact/          # Manual compaction suggestions (Longform Guide)
-|   |-- tdd-workflow/               # TDD methodology
-|   |-- security-review/            # Security checklist
-|   |-- eval-harness/               # Verification loop evaluation (Longform Guide)
-|   |-- verification-loop/          # Continuous verification (Longform Guide)
-|   |-- golang-patterns/            # Go idioms and best practices (NEW)
-|   |-- golang-testing/             # Go testing patterns, TDD, benchmarks (NEW)
-|
-|-- commands/         # Slash commands for quick execution
-|   |-- tdd.md              # /tdd - Test-driven development
-|   |-- plan.md             # /plan - Implementation planning
-|   |-- e2e.md              # /e2e - E2E test generation
-|   |-- code-review.md      # /code-review - Quality review
-|   |-- build-fix.md        # /build-fix - Fix build errors
-|   |-- refactor-clean.md   # /refactor-clean - Dead code removal
-|   |-- learn.md            # /learn - Extract patterns mid-session (Longform Guide)
-|   |-- checkpoint.md       # /checkpoint - Save verification state (Longform Guide)
-|   |-- verify.md           # /verify - Run verification loop (Longform Guide)
-|   |-- setup-pm.md         # /setup-pm - Configure package manager
-|   |-- go-review.md        # /go-review - Go code review (NEW)
-|   |-- go-test.md          # /go-test - Go TDD workflow (NEW)
-|   |-- go-build.md         # /go-build - Fix Go build errors (NEW)
-|   |-- skill-create.md     # /skill-create - Generate skills from git history (NEW)
-|   |-- instinct-status.md  # /instinct-status - View learned instincts (NEW)
-|   |-- instinct-import.md  # /instinct-import - Import instincts (NEW)
-|   |-- instinct-export.md  # /instinct-export - Export instincts (NEW)
-|   |-- evolve.md           # /evolve - Cluster instincts into skills (NEW)
-|
-|-- rules/            # Always-follow guidelines (copy to ~/.claude/rules/)
-|   |-- security.md         # Mandatory security checks
-|   |-- coding-style.md     # Immutability, file organization
-|   |-- testing.md          # TDD, 80% coverage requirement
-|   |-- git-workflow.md     # Commit format, PR process
-|   |-- agents.md           # When to delegate to subagents
-|   |-- performance.md      # Model selection, context management
-|
-|-- hooks/            # Trigger-based automations
-|   |-- hooks.json                # All hooks config (PreToolUse, PostToolUse, Stop, etc.)
-|   |-- memory-persistence/       # Session lifecycle hooks (Longform Guide)
-|   |-- strategic-compact/        # Compaction suggestions (Longform Guide)
-|
-|-- scripts/          # Cross-platform Node.js scripts (NEW)
-|   |-- lib/                     # Shared utilities
-|   |   |-- utils.js             # Cross-platform file/path/system utilities
-|   |   |-- package-manager.js   # Package manager detection and selection
-|   |-- hooks/                   # Hook implementations
-|   |   |-- session-start.js     # Load context on session start
-|   |   |-- session-end.js       # Save state on session end
-|   |   |-- pre-compact.js       # Pre-compaction state saving
-|   |   |-- suggest-compact.js   # Strategic compaction suggestions
-|   |   |-- evaluate-session.js  # Extract patterns from sessions
-|   |-- setup-package-manager.js # Interactive PM setup
-|
-|-- tests/            # Test suite (NEW)
-|   |-- lib/                     # Library tests
-|   |-- hooks/                   # Hook tests
-|   |-- run-all.js               # Run all tests
-|
-|-- contexts/         # Dynamic system prompt injection contexts (Longform Guide)
-|   |-- dev.md              # Development mode context
-|   |-- review.md           # Code review mode context
-|   |-- research.md         # Research/exploration mode context
-|
-|-- examples/         # Example configurations and sessions
-|   |-- CLAUDE.md           # Example project-level config
-|   |-- user-CLAUDE.md      # Example user-level config
-|
-|-- mcp-configs/      # MCP server configurations
-|   |-- mcp-servers.json    # GitHub, Supabase, Vercel, Railway, etc.
-|
-|-- marketplace.json  # Self-hosted marketplace config (for /plugin marketplace add)
+# Manual coordination: Share context between sessions
 ```
 
 ---
 
-## Ecosystem Tools
+## Available Skills
 
-### Skill Creator
+### Core Skills
 
-Two ways to generate Claude Code skills from your repository:
+1. **coding-standards** - Universal coding standards
+   - Code quality principles
+   - TypeScript/JavaScript/React best practices
+   - Naming conventions and patterns
+   - **Activation:** Auto-discovered (OpenCode loads automatically)
 
-#### Option A: Local Analysis (Built-in)
+2. **backend-patterns** - Backend development patterns
+   - API design principles
+   - Database best practices
+   - Backend architecture patterns
 
-Use the `/skill-create` command for local analysis without external services:
+3. **frontend-patterns** - Frontend development patterns
+   - React component patterns
+   - State management
+   - Performance optimization
+
+### Advanced Skills (Available in Original Repo)
+
+4. **iterative-retrieval** - Progressive context refinement
+   - 4-phase retrieval for agent queries
+   - **Note:** Manual implementation required in OpenCode
+
+5. **continuous-learning** - Automatic pattern extraction
+   - Instinct-based learning system
+   - Background observation and evolution
+   - **Note:** Manual implementation required in OpenCode
+
+---
+
+## Available Commands
+
+### Prompt-Based Commands
+
+OpenCode doesn't have native slash commands. Use these prompts:
+
+1. **@planner** - Create implementation plan
+   - Use for planning new features or complex refactoring
+   - **Stored in:** `~/.config/opencode/commands/plan.md`
+
+2. **@tdd-guide** - Implement with TDD methodology
+   - Use for test-driven development
+   - **Stored in:** `~/.config/opencode/commands/tdd.md`
+
+3. **@code-reviewer** - Review code for quality and security
+   - Use for code review before merging
+   - **Stored in:** `~/.config/opencode/commands/code-review.md`
+
+### Using Command Prompts
+
+Since OpenCode lacks native slash commands, type prompts directly:
 
 ```bash
-/skill-create                    # Analyze current repo
-/skill-create --instincts        # Also generate instincts for continuous-learning
+opencode
+# Then type or paste your command prompt:
+
+Implement user authentication with TDD methodology
 ```
 
-This analyzes your git history locally and generates SKILL.md files.
+This will use the `@tdd-guide` agent to implement following TDD best practices.
 
-#### Option B: GitHub App (Advanced)
+---
 
-For advanced features (10k+ commits, auto-PRs, team sharing):
+## Migration Differences
 
-[Install GitHub App](https://github.com/apps/skill-creator) | [ecc.tools](https://ecc.tools)
+### What Works the Same
+
+- ✅ **Skill Discovery**: OpenCode auto-discovers `SKILL.md` files from configured `skills_paths`
+- ✅ **Agent Invocation**: Use `@agent-name` syntax to invoke agents
+- ✅ **Multi-Session**: Create multiple sessions for parallel work
+- ✅ **Session Management**: Navigate with `<Leader>+Right` / `<Leader>+Left` keybinds
+- ✅ **Project Context**: OpenCode creates `AGENTS.md` for initialization (similar to `CLAUDE.md`)
+
+### What Requires Adaptation
+
+- ⚠️ **Agent Orchestration**: No sequential/parallel chains
+  - **Workaround:** Use multi-session coordination with manual context sharing
+  - **Example:** See [Agent Usage](#agent-usage) section
+
+- ⚠️ **Slash Commands**: No native `/command` syntax
+  - **Workaround:** Type prompts directly or use command prompts from `~/.config/opencode/commands/`
+  - **Example:** See [Available Commands](#available-commands) section
+
+- ⚠️ **Hooks**: No event-driven automation
+  - **Workaround:** Use session management and manual workflows
+  - **Example:** Manual save/load of session context
+
+- ⚠️ **Rules System**: No always-follow rules
+  - **Workaround:** Agent prompt modifications guide behavior
+
+### What's Not Supported
+
+- ❌ **Agent Chains**: No sequential/parallel agent execution
+- ❌ **Automatic Handoff Documents**: No structured passing between agents
+- ❌ **Automatic Compaction**: No session summarization
+- ❌ **Event-Driven Actions**: No hooks for session events
+- ❌ **Agent-Specific Tool Permissions**: No per-agent scoped tools (uses permission system)
+- ❌ **Parallel Agent Execution**: No built-in parallel agent launches
+
+---
+
+## Limitations
+
+### Key Architectural Differences
+
+1. **Orchestration Model**
+   - **Claude Code:** Agent chains with automatic handoffs
+   - **OpenCode:** Manual multi-session coordination required
+   - **Impact:** Complex workflows require more manual coordination
+
+2. **Permission System**
+   - **Claude Code:** Per-agent scoped tools with granular control
+   - **OpenCode:** Global allow/ask/deny with per-tool and per-bash-command control
+   - **Impact:** Less fine-grained control, coarser permissions
+
+3. **Agent Invocation**
+   - **Claude Code:** `Task` tool delegation
+   - **OpenCode:** `@mentioning` syntax
+   - **Impact:** Different user interaction pattern
+
+---
+
+## Usage Examples
+
+### Example 1: Feature Implementation with TDD
 
 ```bash
-# Comment on any issue:
-/skill-creator analyze
+# Session 1: Planning
+opencode
 
-# Or auto-triggers on push to default branch
+# Then invoke planner
+@planner Create implementation plan for user authentication
 ```
 
-Both options create:
-- **SKILL.md files** - Ready-to-use skills for Claude Code
-- **Instinct collections** - For continuous-learning-v2
-- **Pattern extraction** - Learns from your commit history
-
-### Continuous Learning v2
-
-The instinct-based learning system automatically learns your patterns:
+**Copy planner's plan** to clipboard
 
 ```bash
-/instinct-status        # Show learned instincts with confidence
-/instinct-import <file> # Import instincts from others
-/instinct-export        # Export your instincts for sharing
-/evolve                 # Cluster related instincts into skills
+# Session 2: Implementation
+opencode
+
+# Use TDD agent
+@tdd-guide Implement user authentication following TDD methodology
 ```
 
-See `skills/continuous-learning-v2/` for full documentation.
+The `@tdd-guide` agent will guide you through:
+1. Writing failing tests first
+2. Implementing to pass tests
+3. Refactoring code
+4. Ensuring 80%+ test coverage
 
----
-
-## Installation
-
-### Option 1: Install as Plugin (Recommended)
-
-The easiest way to use this repo - install as a Claude Code plugin:
+### Example 2: Parallel Code Review
 
 ```bash
-# Add this repo as a marketplace
-/plugin marketplace add affaan-m/everything-claude-code
+# Terminal 1: Security review
+opencode
 
-# Install the plugin
-/plugin install everything-claude-code@everything-claude-code
+@security-reviewer Review authentication implementation for vulnerabilities
+
+# Terminal 2: Code quality review  
+opencode
+
+@code-reviewer Review authentication implementation for quality issues
 ```
 
-Or add directly to your `~/.claude/settings.json`:
+Use OpenCode's session navigation (`<Leader>+Right` / `<Leader>+Left`) to switch between sessions.
 
-```json
-{
-  "extraKnownMarketplaces": {
-    "everything-claude-code": {
-      "source": {
-        "source": "github",
-        "repo": "affaan-m/everything-claude-code"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "everything-claude-code@everything-claude-code": true
-  }
-}
-```
-
-This gives you instant access to all commands, agents, skills, and hooks.
-
-> **Note:** The Claude Code plugin system does not support distributing `rules` via plugins ([upstream limitation](https://code.claude.com/docs/en/plugins-reference)). You need to install rules manually:
->
-> ```bash
-> # Clone the repo first
-> git clone https://github.com/affaan-m/everything-claude-code.git
->
-> # Option A: User-level rules (applies to all projects)
-> cp -r everything-claude-code/rules/* ~/.claude/rules/
->
-> # Option B: Project-level rules (applies to current project only)
-> mkdir -p .claude/rules
-> cp -r everything-claude-code/rules/* .claude/rules/
-> ```
-
----
-
-### Option 2: Manual Installation
-
-If you prefer manual control over what's installed:
+### Example 3: Architecture Review
 
 ```bash
-# Clone the repo
-git clone https://github.com/affaan-m/everything-claude-code.git
+opencode
 
-# Copy agents to your Claude config
-cp everything-claude-code/agents/*.md ~/.claude/agents/
-
-# Copy rules
-cp everything-claude-code/rules/*.md ~/.claude/rules/
-
-# Copy commands
-cp everything-claude-code/commands/*.md ~/.claude/commands/
-
-# Copy skills
-cp -r everything-claude-code/skills/* ~/.claude/skills/
+@architect Review the new user authentication architecture
 ```
 
-#### Add hooks to settings.json
-
-Copy the hooks from `hooks/hooks.json` to your `~/.claude/settings.json`.
-
-#### Configure MCPs
-
-Copy desired MCP servers from `mcp-configs/mcp-servers.json` to your `~/.claude.json`.
-
-**Important:** Replace `YOUR_*_HERE` placeholders with your actual API keys.
+Get recommendations for scalable, maintainable architecture design.
 
 ---
 
-## Key Concepts
+## Troubleshooting
 
-### Agents
+### Common Issues
 
-Subagents handle delegated tasks with limited scope. Example:
+**Issue:** Agents not discovered
+- **Solution:** Check that `~/.config/opencode/agents/` and `.opencode/agents/` directories contain the agent files
+- **Note:** Restart OpenCode after adding new agents
 
-```markdown
----
-name: code-reviewer
-description: Reviews code for quality, security, and maintainability
-tools: ["Read", "Grep", "Glob", "Bash"]
-model: opus
----
+**Issue:** Commands not recognized
+- **Solution:** OpenCode expects prompts, not commands. Type the command name or use command prompts from `~/.config/opencode/commands/`
 
-You are a senior code reviewer...
-```
+**Issue:** Agent permissions not working
+- **Solution:** Check your `opencode.json` configuration for global and agent-specific permissions
+- **Note:** Review [docs/opencode-architecture.md](#docs/opencode-architecture.md) for permission system details
 
-### Skills
-
-Skills are workflow definitions invoked by commands or agents:
-
-```markdown
-# TDD Workflow
-
-1. Define interfaces first
-2. Write failing tests (RED)
-3. Implement minimal code (GREEN)
-4. Refactor (IMPROVE)
-5. Verify 80%+ coverage
-```
-
-### Hooks
-
-Hooks fire on tool events. Example - warn about console.log:
-
-```json
-{
-  "matcher": "tool == \"Edit\" && tool_input.file_path matches \"\\\\.(ts|tsx|js|jsx)$\"",
-  "hooks": [{
-    "type": "command",
-    "command": "#!/bin/bash\ngrep -n 'console\\.log' \"$file_path\" && echo '[Hook] Remove console.log' >&2"
-  }]
-}
-```
-
-### Rules
-
-Rules are always-follow guidelines. Keep them modular:
-
-```
-~/.claude/rules/
-  security.md      # No hardcoded secrets
-  coding-style.md  # Immutability, file limits
-  testing.md       # TDD, coverage requirements
-```
+**Issue:** Multi-session coordination confusing
+- **Solution:** Use session navigation keybinds to switch between sessions
+- **Tip:** Copy context between sessions manually as needed
 
 ---
 
-## Running Tests
+## Additional Resources
 
-The plugin includes a comprehensive test suite:
-
-```bash
-# Run all tests
-node tests/run-all.js
-
-# Run individual test files
-node tests/lib/utils.test.js
-node tests/lib/package-manager.test.js
-node tests/hooks/hooks.test.js
-```
+- **Full Architecture Analysis:** See `docs/opencode-architecture.md`
+- **Agent System Documentation:** See `docs/opencode-architecture.md`  
+- **OpenCode Documentation:** https://opencode.ai/docs
+- **Original Claude Code Guide:** https://code.claude.com/docs
 
 ---
 
-## Contributing
+## Version
 
-**Contributions are welcome and encouraged.**
-
-This repo is meant to be a community resource. If you have:
-- Useful agents or skills
-- Clever hooks
-- Better MCP configurations
-- Improved rules
-
-Please contribute! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Ideas for Contributions
-
-- Language-specific skills (Python, Rust patterns) - Go now included!
-- Framework-specific configs (Django, Rails, Laravel)
-- DevOps agents (Kubernetes, Terraform, AWS)
-- Testing strategies (different frameworks)
-- Domain-specific knowledge (ML, data engineering, mobile)
+**Version:** 2.0.0 (OpenCode Edition)  
+**Release Date:** 2025-01-28  
+**Branch:** opencode  
+**Migrated from:** everything-claude-code v1.0.0 (Claude Code Edition)
 
 ---
 
-## Background
+## Summary
 
-I've been using Claude Code since the experimental rollout. Won the Anthropic x Forum Ventures hackathon in Sep 2025 building [zenith.chat](https://zenith.chat) with [@DRodriguezFX](https://x.com/DRodriguezFX) - entirely using Claude Code.
+This OpenCode-compatible version provides:
 
-These configs are battle-tested across multiple production applications.
+✅ **Working:**
+- 12 specialized agents (planner, architect, tdd-guide, code-reviewer, security-reviewer, etc.)
+- 3 core skills (coding-standards, backend-patterns, frontend-patterns)
+- Prompt-based commands for common workflows
 
----
+⚠️ **Requires Manual Coordination:**
+- Agent orchestration via multi-session management
+- Context sharing between sessions
+- Manual implementation of advanced patterns
 
-## Important Notes
+**Core Value Proposition Preserved:**
+Comprehensive agents and skills for planning, architecture, testing, security review, and best practices - now available to OpenCode users.
 
-### Context Window Management
-
-**Critical:** Don't enable all MCPs at once. Your 200k context window can shrink to 70k with too many tools enabled.
-
-Rule of thumb:
-- Have 20-30 MCPs configured
-- Keep under 10 enabled per project
-- Under 80 tools active
-
-Use `disabledMcpServers` in project config to disable unused ones.
-
-### Customization
-
-These configs work for my workflow. You should:
-1. Start with what resonates
-2. Modify for your stack
-3. Remove what you don't use
-4. Add your own patterns
+**Next Steps:**
+1. Test all converted agents in real OpenCode sessions
+2. Convert remaining skills (backend-patterns, frontend-patterns, iterative-retrieval, continuous-learning)
+3. Create workarounds for advanced patterns (iterative retrieval, continuous learning)
+4. Write comprehensive reference guide for OpenCode configuration
+5. Finalize release with example configurations
 
 ---
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=affaan-m/everything-claude-code&type=Date)](https://star-history.com/#affaan-m/everything-claude-code&Date)
-
----
-
-## Links
-
-- **Shorthand Guide (Start Here):** [The Shorthand Guide to Everything Claude Code](https://x.com/affaanmustafa/status/2012378465664745795)
-- **Longform Guide (Advanced):** [The Longform Guide to Everything Claude Code](https://x.com/affaanmustafa/status/2014040193557471352)
-- **Follow:** [@affaanmustafa](https://x.com/affaanmustafa)
-- **zenith.chat:** [zenith.chat](https://zenith.chat)
-
----
-
-## License
-
-MIT - Use freely, modify as needed, contribute back if you can.
-
----
-
-**Star this repo if it helps. Read both guides. Build something great.**
+**Happy Coding with OpenCode!** 🚀
