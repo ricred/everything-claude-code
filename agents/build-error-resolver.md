@@ -1,8 +1,15 @@
 ---
 name: build-error-resolver
 description: Build and TypeScript error resolution specialist. Use PROACTIVELY when build fails or type errors occur. Fixes build/type errors only with minimal diffs, no architectural edits. Focuses on getting the build green quickly.
-tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
-model: opus
+model: glm-4.7
+tools:
+  read: true
+  write: true
+  edit: true
+  bash: true
+  grep: true
+  glob: true
+  
 ---
 
 # Build Error Resolver

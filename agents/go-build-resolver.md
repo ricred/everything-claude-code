@@ -1,8 +1,15 @@
 ---
 name: go-build-resolver
 description: Go build, vet, and compilation error resolution specialist. Fixes build errors, go vet issues, and linter warnings with minimal changes. Use when Go builds fail.
-tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
-model: opus
+model: glm-4.7
+tools:
+  read: true
+  write: true
+  edit: true
+  bash: true
+  grep: true
+  glob: true
+
 ---
 
 # Go Build Error Resolver
