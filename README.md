@@ -34,6 +34,191 @@ OpenCode-compatible version of the battle-tested Claude Code configurations from
    The `.claude-plugin/plugin.json` file has been converted to OpenCode agent definitions in `~/.config/opencode/agents/`.
 
 4. **Start OpenCode:**
+
+---
+
+## Global Setup (One-Time Per Machine)
+
+**IMPORTANT:** Your agents, skills, and templates work **globally across ALL projects** on your machine. You only need to set this up **ONCE per machine** - no copying to each project!
+
+### Quick Setup (Linux/macOS)
+
+```bash
+# 1. Clone repository (if not already done)
+cd /path/to/where/you/want/repo
+git clone https://github.com/yourusername/everything-claude-code.git
+cd everything-claude-code
+
+# 2. Run automated setup script
+bash setup-opencode-global.sh
+
+# That's it! ✅
+# Your agents & skills are now available in EVERY project on this machine
+```
+
+### Quick Setup (Windows)
+
+```powershell
+# 1. Clone repository (if not already done)
+cd C:\path\to\where\you\want\repo
+git clone https://github.com/yourusername/everything-claude-code.git
+cd everything-claude-code
+
+# 2. Run automated setup script (PowerShell)
+# In PowerShell, run:
+.\setup-opencode-global.ps1
+
+# OR using Git Bash:
+bash setup-opencode-global.sh
+
+# That's it! ✅
+# Your agents & skills are now available in EVERY project on this Windows machine
+```
+
+### Manual Setup (All Platforms)
+
+If the automated script doesn't work or you prefer manual setup:
+
+#### Linux/macOS:
+
+```bash
+# 1. Create global config directory
+mkdir -p ~/.config/opencode
+
+# 2. Copy agents (from everything-claude-code directory)
+cp -r ~/.config/opencode/agents ~/.config/opencode/agents
+
+# 3. Copy skills
+cp -r skills/* ~/.config/opencode/skills
+
+# 4. Copy context templates
+mkdir -p ~/.config/opencode/context-templates
+cp -r ~/.config/opencode/context-templates/* ~/.config/opencode/context-templates/
+
+# 5. Copy configuration
+cp opencode.json ~/.config/opencode/opencode.json
+
+# 6. Done! ✅
+```
+
+#### Windows (PowerShell):
+
+```powershell
+# 1. Create global config directory
+New-Item -ItemType Directory -Force -Path $env:USERPROFILE\.config\opencode
+
+# 2. Copy agents (from everything-claude-code directory)
+Copy-Item -Recurse -Force -Path .\.config\opencode\agents\* -Destination $env:USERPROFILE\.config\opencode\agents\\
+
+# 3. Copy skills
+Copy-Item -Recurse -Force -Path skills\* -Destination $env:USERPROFILE\.config\opencode\skills\\
+
+# 4. Copy context templates
+New-Item -ItemType Directory -Force -Path $env:USERPROFILE\.config\opencode\context-templates
+Copy-Item -Recurse -Force -Path .\.config\opencode\context-templates\* -Destination $env:USERPROFILE\.config\opencode\context-templates\\
+
+# 5. Copy configuration
+Copy-Item -Force -Path opencode.json -Destination $env:USERPROFILE\.config\opencode\opencode.json
+
+# 6. Done! ✅
+```
+
+#### Windows (Git Bash/WSL):
+
+```bash
+# Same as Linux/macOS (uses Unix-style paths)
+mkdir -p ~/.config/opencode
+cp -r ~/.config/opencode/agents ~/.config/opencode/agents
+cp -r skills/* ~/.config/opencode/skills
+mkdir -p ~/.config/opencode/context-templates
+cp -r ~/.config/opencode/context-templates/* ~/.config/opencode/context-templates/
+cp opencode.json ~/.config/opencode/opencode.json
+```
+
+### What Gets Configured
+
+After setup, you'll have globally available:
+
+**Agents (5):**
+- `@planner` - Implementation planning
+- `@architect` - System design
+- `@tdd-guide` - Test-driven development
+- `@code-reviewer` - Code quality review
+- `@security-reviewer` - Security analysis
+
+**Skills (15):**
+- coding-standards, backend-patterns, frontend-patterns, tdd-workflow
+- iterative-retrieval, continuous-learning, continuous-learning-v2
+- security-review, postgres-patterns, verification-loop
+- golang-patterns, golang-testing, clickhouse-io
+- strategic-compact, eval-harness, project-guidelines-example
+
+**Context Templates (9):**
+- development-mode.txt, research-mode.txt, code-review-mode.txt
+- model-selection.txt, tdd-workflow.txt, git-workflow.txt
+- compact-exploration.txt, compact-milestone.txt, compact-switch.txt
+
+**Configuration:**
+- `~/.config/opencode/opencode.json` (Global OpenCode settings)
+
+### Using Global Setup in ANY Project
+
+After setup works in EVERY project on your machine:
+
+```bash
+# Navigate to ANY project on your machine
+cd /path/to/any-project
+
+# Start OpenCode
+opencode
+
+# Your agents work automatically!
+@planner Create plan for X
+@architect Review architecture for Y
+@tdd-guide Implement Z with TDD
+
+# Skills are auto-discovered automatically
+# Context templates available globally
+```
+
+**NO COPYING NEEDED TO OTHER PROJECTS!** 🎉
+
+### Verifying Setup
+
+Test that global setup works:
+
+```bash
+# Linux/macOS
+ls ~/.config/opencode/agents/
+# Should see: planner.md, architect.md, tdd-guide.md, code-reviewer.md, security-reviewer.md
+
+ls ~/.config/opencode/skills/
+# Should see: coding-standards, backend-patterns, frontend-patterns, etc.
+
+cat ~/.config/opencode/opencode.json
+# Should see configuration with agents_path and skills_paths
+```
+
+### Updating Global Setup
+
+To update agents/skills on the same machine:
+
+```bash
+# 1. Navigate to everything-claude-code directory
+cd /path/to/everything-claude-code
+
+# 2. Pull latest changes
+git pull origin opencode
+
+# 3. Run setup again (will prompt to overwrite)
+bash setup-opencode-global.sh
+
+# OR manually copy updated files
+cp -r ~/.config/opencode/agents/* ~/.config/opencode/agents/
+cp -r skills/* ~/.config/opencode/skills/
+```
+
+---
    ```bash
    opencode
    ```
