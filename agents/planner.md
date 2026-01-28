@@ -1,7 +1,7 @@
 ---
 name: planner
 description: Expert planning specialist for complex features and refactoring. Use PROACTIVELY when users request feature implementation, architectural changes, or complex refactoring. Automatically activated for planning tasks.
-model: glm-4.7
+model: zai-coding-plan/glm-4.7
 tools:
   read: true
   grep: true

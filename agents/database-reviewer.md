@@ -1,7 +1,7 @@
 ---
 name: database-reviewer
 description: PostgreSQL database specialist for query optimization, schema design, security, and performance. Use PROACTIVELY when writing SQL, creating migrations, designing schemas, or troubleshooting database performance. Incorporates Supabase best practices.
-model: glm-4.7
+model: zai-coding-plan/glm-4.7
 tools:
   read: true
   write: true

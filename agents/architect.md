@@ -1,7 +1,7 @@
 ---
 name: architect
 description: Software architecture specialist for system design, scalability, and technical decision-making. Use PROACTIVELY when planning new features, refactoring large systems, or making architectural decisions.
-model: glm-4.7
+model: zai-coding-plan/glm-4.7
 tools:
   read: true
   grep: true

@@ -1,7 +1,7 @@
 ---
 name: doc-updater
 description: Documentation and codemap specialist. Use PROACTIVELY for updating codemaps and documentation. Runs /update-codemaps and /update-docs, generates docs/CODEMAPS/*, updates READMEs and guides.
-model: glm-4.7
+model: zai-coding-plan/glm-4.7
 tools:
   read: true
   write: true

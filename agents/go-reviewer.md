@@ -1,7 +1,7 @@
 ---
 name: go-reviewer
 description: Expert Go code reviewer specializing in idiomatic Go, concurrency patterns, error handling, and performance. Use for all Go code changes. MUST BE USED for Go projects.
-model: glm-4.7
+model: zai-coding-plan/glm-4.7
 tools:
   read: true
   grep: true
