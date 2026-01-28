@@ -30,14 +30,14 @@ if (Test-Path "$globalDir\agents") {
     Write-Host "  Global agents already exist at $globalDir\agents" -ForegroundColor Yellow
     $overwrite = Read-Host "  Overwrite? [Y/N]: "
     if ($overwrite -match '^[Yy]$') {
-        Copy-Item -Recurse -Force -Path ".\.config\opencode\agents\*" -Destination "$globalDir\agents\"
+        Copy-Item -Recurse -Force -Path "agents\*" -Destination "$globalDir\agents\"
         Write-Host "  ✅ Agents copied (overwritten)" -ForegroundColor Green
     } else {
         Write-Host "  ⏭️  Skipped (keeping existing)" -ForegroundColor Yellow
     }
 } else {
     New-Item -ItemType Directory -Force -Path "$globalDir\agents" | Out-Null
-    Copy-Item -Recurse -Force -Path ".\.config\opencode\agents\*" -Destination "$globalDir\agents\"
+    Copy-Item -Recurse -Force -Path "agents\*" -Destination "$globalDir\agents\"
     Write-Host "  ✅ Agents copied" -ForegroundColor Green
 }
 
@@ -67,14 +67,14 @@ if (Test-Path "$globalDir\context-templates") {
     Write-Host "  Global templates already exist at $globalDir\context-templates" -ForegroundColor Yellow
     $overwrite = Read-Host "  Overwrite? [Y/N]: "
     if ($overwrite -match '^[Yy]$') {
-        Copy-Item -Recurse -Force -Path ".\.config\opencode\context-templates\*" -Destination "$globalDir\context-templates\"
+        Copy-Item -Recurse -Force -Path "contexts\*" -Destination "$globalDir\context-templates\"
         Write-Host "  ✅ Templates copied (overwritten)" -ForegroundColor Green
     } else {
         Write-Host "  ⏭️  Skipped (keeping existing)" -ForegroundColor Yellow
     }
 } else {
     New-Item -ItemType Directory -Force -Path "$globalDir\context-templates" | Out-Null
-    Copy-Item -Recurse -Force -Path ".\.config\opencode\context-templates\*" -Destination "$globalDir\context-templates\"
+    Copy-Item -Recurse -Force -Path "contexts\*" -Destination "$globalDir\context-templates\"
     Write-Host "  ✅ Templates copied" -ForegroundColor Green
 }
 
@@ -96,8 +96,8 @@ if (Test-Path "$globalDir\opencode.json") {
 }
 
 # Copy README if exists
-if (Test-Path ".\.config\opencode\README.md") {
-    Copy-Item -Force -Path ".\.config\opencode\README.md" -Destination "$globalDir\README.md"
+if (Test-Path "README.md") {
+    Copy-Item -Force -Path "README.md" -Destination "$globalDir\README.md"
     Write-Host "  ✅ Global README copied" -ForegroundColor Green
 }
 

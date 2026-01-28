@@ -27,11 +27,11 @@ mkdir -p "$GLOBAL_DIR"
 # Copy agents
 echo ""
 echo "📋 Copying agents..."
-if [[ -d "~/.config/opencode/agents" ]]; then
+if [[ -d "$GLOBAL_DIR/agents" ]]; then
     echo "  Global agents already exist at ~/.config/opencode/agents/"
     read -p "  Overwrite? [y/N]: " overwrite
     if [[ "$overwrite" =~ ^[Yy]$ ]]; then
-        cp -r ~/.config/opencode/agents/* "$GLOBAL_DIR/agents/"
+        cp -r agents/* "$GLOBAL_DIR/agents/"
         echo "  ✅ Agents copied (overwritten)"
     else
         echo "  ⏭️  Skipped (keeping existing)"
@@ -45,7 +45,7 @@ fi
 # Copy skills
 echo ""
 echo "📚 Copying skills..."
-if [[ -d "~/.config/opencode/skills" ]]; then
+if [[ -d "$GLOBAL_DIR/skills" ]]; then
     echo "  Global skills already exist at ~/.config/opencode/skills/"
     read -p "  Overwrite? [y/N]: " overwrite
     if [[ "$overwrite" =~ ^[Yy]$ ]]; then
@@ -64,29 +64,29 @@ fi
 # Copy context templates
 echo ""
 echo "📝 Copying context templates..."
-if [[ -d "~/.config/opencode/context-templates" ]]; then
+if [[ -d "$GLOBAL_DIR/context-templates" ]]; then
     echo "  Global templates already exist at ~/.config/opencode/context-templates/"
     read -p "  Overwrite? [y/N]: " overwrite
     if [[ "$overwrite" =~ ^[Yy]$ ]]; then
-        cp -r ~/.config/opencode/context-templates/* "$GLOBAL_DIR/context-templates/"
+        cp -r contexts/* "$GLOBAL_DIR/context-templates/"
         echo "  ✅ Templates copied (overwritten)"
     else
         echo "  ⏭️  Skipped (keeping existing)"
     fi
 else
     mkdir -p "$GLOBAL_DIR/context-templates"
-    cp -r ~/.config/opencode/context-templates/* "$GLOBAL_DIR/context-templates/"
+    cp -r contexts/* "$GLOBAL_DIR/context-templates/"
     echo "  ✅ Templates copied"
 fi
 
 # Copy configuration
 echo ""
 echo "⚙️  Copying configuration..."
-if [[ -f "~/.config/opencode/opencode.json" ]]; then
+if [[ -f "$GLOBAL_DIR/opencode.json" ]]; then
     echo "  Global config already exists at ~/.config/opencode/opencode.json"
     read -p "  Overwrite? [y/N]: " overwrite
     if [[ "$overwrite" =~ ^[Yy]$ ]]; then
-        cp ~/.config/opencode/opencode.json "$GLOBAL_DIR/opencode.json"
+        cp opencode.json "$GLOBAL_DIR/opencode.json"
         echo "  ✅ Config copied (overwritten)"
     else
         echo "  ⏭️  Skipped (keeping existing)"
@@ -97,8 +97,8 @@ else
 fi
 
 # Copy README
-if [[ ! -f "$GLOBAL_DIR/README.md" ]]; then
-    cp ~/.config/opencode/README.md "$GLOBAL_DIR/README.md"
+if [[ -f "README.md" ]]; then
+    cp README.md "$GLOBAL_DIR/README.md"
     echo "  ✅ Global README copied"
 fi
 
